@@ -3,7 +3,7 @@
 A desktop productivity application written in C++ that features a multithreaded timer, user authentication, and statistics tracking.
 
 ## Features
-* **Multithreaded Core:** The timer logic runs on a dedicated background thread, ensuring the UI remains responsive with thread-safe updates.
+* **Multithreaded Core:** The timer logic runs on a dedicated background thread.
 * **Database Integration:** Utilizes SQLite3 for user login, authentication, and persistent logging of completed work sessions.
 * **GUI:** Clean desktop interface built with the wxWidgets framework.
 * **Unit Testing:** Integrated testing using the Catch2 framework.
