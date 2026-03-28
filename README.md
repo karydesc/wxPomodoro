@@ -1,10 +1,10 @@
 # Multithreaded Pomodoro Timer & Logger
 
-A desktop productivity application written in C++ that features a multithreaded timer, user authentication, and statistics tracking.
+A desktop productivity application written in C++ that features a multithreaded timer and user statistics tracking.
 
 ## Features
 * **Multithreaded Core:** The timer logic runs on a dedicated background thread.
-* **Database Integration:** Utilizes SQLite3 for user login, authentication, and persistent logging of completed work sessions.
+* **Database Integration:** Utilizes SQLite3 for persistent logging of user work sessions.
 * **GUI:** Clean desktop interface built with the wxWidgets framework.
 * **Unit Testing:** Integrated testing using the Catch2 framework.
 
@@ -12,7 +12,6 @@ A desktop productivity application written in C++ that features a multithreaded 
 * C++ 
 * wxWidgets
 * SQLite3
-* CMake & Catch2
 
 ---
 
@@ -23,9 +22,4 @@ To build and run this project, you will need:
 * Make (or your preferred build system)
 * wxWidgets Library
 * sqlite3 Library
-* Catch2 Library (for testing)
 
-### Installation (macOS via Homebrew)
-```bash
-brew update
-brew install sqlite cmake wxwidgets
