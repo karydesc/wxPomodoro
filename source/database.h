@@ -1,24 +1,21 @@
-//
-// Created by Chris on 30/10/23.
-//
-
-#ifndef DIT_OOP_PROJECT_1_DATABASE_H
-#define DIT_OOP_PROJECT_1_DATABASE_H
+#pragma once
 #include <string>
 #include <sqlite3.h>
 #include "pomodoro.h"
 using namespace std;
 class database {
 public:
-    bool addUser(const string&, const string&);
+    bool addUser(const string &);
+
+    bool userExists(const string &);
+
     database();
-    bool authUser(const string&,const string&);
-    void close();
+    void close() const;
     void storeStats(const string&,pomodoro*);
+    UserStats getStats(const std::string& user);
 private:
     sqlite3* db;
     int rc;
     char* error;
     sqlite3_stmt* stmt;
 };
-#endif //DIT_OOP_PROJECT_1_DATABASE_H

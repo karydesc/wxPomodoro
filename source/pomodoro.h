@@ -1,12 +1,10 @@
-//
-// Created by Chris on 14/10/23.
-//
-
-#ifndef DIT_OOP_PROJECT_1_POMODORO_H
-#define DIT_OOP_PROJECT_1_POMODORO_H
+#pragma once
 #include <wx/wx.h>
 #include <thread>
-
+struct UserStats {
+    int workMins = 0;
+    int sessionsCompleted = 0;
+};
 class pomodoro {
 private:
     bool pauseflag=false;
@@ -19,14 +17,9 @@ public:
     bool quitRequested=false;
     std::thread backgroundThread;
     bool cancelFlag=false;
-
-
-    void startSession(int workmins,int breakmins,wxStaticText*,wxGauge*);
+    void startSession(int workmins,int breakmins,wxStaticText*,wxGauge*, wxStaticText *);
     void pauseSession();
-    void resetScreen(wxStaticText *text, wxGauge *gauge);
+    static void resetScreen(wxStaticText *text, wxGauge *gauge);
 
     friend class database;
 };
-
-
-#endif //DIT_OOP_PROJECT_1_POMODORO_H

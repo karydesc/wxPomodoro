@@ -15,6 +15,8 @@ class mainFrame : public wxFrame {
 public:
     mainFrame(const wxString& title); //declare constructor that takes a wxstring by reference for the title of the frame
 private:
+    pomodoro* session;
+    wxStaticText* statsLabel;
     wxStaticText *header;
     wxStaticText *timer;
     wxSpinCtrl* timeselect;
@@ -29,10 +31,8 @@ private:
     wxButton* cancelButton;
     void onStartButtonClick(wxCommandEvent& evt);
     void onPauseButtonClick(wxCommandEvent& evt);
-    void onStatButtonClick(wxCommandEvent& evt);
     void onCancelButtonClick(wxCommandEvent& evt);
     void OnClose(wxCloseEvent &e);
-    void onShowStatsClick(wxCommandEvent& evt);
     wxDECLARE_EVENT_TABLE();
 };
 

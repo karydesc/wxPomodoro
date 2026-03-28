@@ -1,8 +1,3 @@
-//
-// Created by Chris on 14/10/23.
-//
-
-
 #include "pomodoro.h"
 #include <iostream>
 #include <wx/wx.h>
@@ -11,26 +6,18 @@
 #include "myApp.h"
 #include <wx/sound.h>
 
-#ifdef _WIN32
-#include <windows.h>
-    string cls ="cls";
-#else
-string cls ="clear";
-#endif
-
-
 using namespace std::chrono_literals;
 using namespace std;
 wxDECLARE_APP(myApp);
-void pomodoro::startSession(int workminutes,int breakminutes,wxStaticText* text,wxGauge* gauge) {
+
+void pomodoro::startSession(int workminutes,int breakminutes,wxStaticText* text,wxGauge* gauge, wxStaticText *statsLabel) {
     this->processing =true;
-    int secs;
     pauseflag=false;
     cancelFlag=false;
-
+    int userWorkedMinutes=0;
 //restart pomodoro indefinitely
     while(true){
-        secs = workminutes * 60;
+        int secs = workminutes * 60;
         wxGetApp().CallAfter([gauge,secs](){ //set the range of the gauge
             gauge->SetRange(secs);
         });
@@ -49,6 +36,15 @@ void pomodoro::startSession(int workminutes,int breakminutes,wxStaticText* text,
             i--;
         }
         std::this_thread::sleep_for(1s); //timer tick
+        if (((secs-i)%60)==0) { //because i is iterating backwards from 'secs'
+            userWorkedMinutes++;
+            wxGetApp().GetDatabase()->storeStats(wxGetApp().getUser(), this); //for every minute store user session stats
+            UserStats currentStats = wxGetApp().GetDatabase()->getStats(wxGetApp().getUser());
+            wxGetApp().CallAfter([statsLabel,currentStats]() {
+                statsLabel->SetLabelText(wxString::Format("Sessions: %d | Mins: %d",
+                currentStats.sessionsCompleted, currentStats.workMins));
+            });
+        }
     }
     wxSound::Play("../resources/breaktime.mp3");
 
@@ -71,13 +67,30 @@ void pomodoro::startSession(int workminutes,int breakminutes,wxStaticText* text,
 
         }
         std::this_thread::sleep_for(1s);
+
+        if (((secs-i)%60)==0) {
+            userWorkedMinutes++;
+            wxGetApp().GetDatabase()->storeStats(wxGetApp().getUser(), this); //for every minute store user session stats
+            UserStats currentStats = wxGetApp().GetDatabase()->getStats(wxGetApp().getUser());
+            wxGetApp().CallAfter([statsLabel,currentStats]() {
+                statsLabel->SetLabelText(wxString::Format("Sessions: %d | Mins: %d",
+                currentStats.sessionsCompleted, currentStats.workMins));
+            });
+        }
     }
     this->sessionsCompleted++;
+    wxGetApp().GetDatabase()->storeStats(wxGetApp().getUser(), this); //for every minute store user session stats
+    UserStats currentStats = wxGetApp().GetDatabase()->getStats(wxGetApp().getUser());
+        wxGetApp().CallAfter([statsLabel,currentStats]() {
+            statsLabel->SetLabelText(wxString::Format("Sessions: %d | Mins: %d",
+            currentStats.sessionsCompleted, currentStats.workMins));
+        });
+
     wxSound::Play("../resources/sessioncomplete.mp3");
-    system(cls.c_str());
+    system("clear");
     cout<<"Starting over in 5s...";
     this_thread::sleep_for(5s);
-    system(cls.c_str());
+    system("clear");
     wxSound::Play("../resources/sessionstart.mp3");
 
 }
@@ -88,7 +101,7 @@ void pomodoro::pauseSession() {
 }
 void pomodoro::resetScreen(wxStaticText* text, wxGauge* gauge){
     wxGetApp().CallAfter([text,gauge]() {
-        text->SetLabelText("Press start to initiate a session");
+        text->SetLabelText("Stopped");
         gauge->SetValue(0);
     });
 }

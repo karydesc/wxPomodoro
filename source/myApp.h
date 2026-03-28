@@ -1,16 +1,11 @@
-//
-// Created by Chris on 14/10/23.
-//
-
-#ifndef DIT_OOP_PROJECT_1_MYAPP_H
-#define DIT_OOP_PROJECT_1_MYAPP_H
+#pragma once
 #include <wx/wx.h>
 #include "database.h"
 #include <string>
 //myApp class needed to represent the application itself
 class myApp : public wxApp{ //inheriting from wxApp class
     public:
-        virtual bool OnInit();
+    bool OnInit() override;
         database* GetDatabase() const { return myDB; }
         string getUser() const {return user;}
 
@@ -18,6 +13,3 @@ class myApp : public wxApp{ //inheriting from wxApp class
         string user;
         database* myDB;
 };
-
-
-#endif //DIT_OOP_PROJECT_1_MYAPP_H
