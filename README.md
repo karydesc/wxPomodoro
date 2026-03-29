@@ -1,4 +1,5 @@
 <img width="507" height="494" alt="image" src="https://github.com/user-attachments/assets/3a1e65af-9580-4a0b-9428-b85a4f675678" />
+
 # Multithreaded Pomodoro Timer & Logger
 
 A desktop productivity application written in C++ that features a multithreaded timer and user statistics tracking.
