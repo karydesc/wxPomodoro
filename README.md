@@ -6,7 +6,6 @@ A desktop productivity application written in C++ that features a multithreaded 
 * **Multithreaded Core:** The timer logic runs on a dedicated background thread.
 * **Database Integration:** Utilizes SQLite3 for persistent logging of user work sessions.
 * **GUI:** Clean desktop interface built with the wxWidgets framework.
-* **Unit Testing:** Integrated testing using the Catch2 framework.
 
 ## Tech Stack
 * C++ 
